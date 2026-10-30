@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ASAD</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23d11a2a'/><text x='50' y='68' font-size='56' text-anchor='middle' fill='white' font-family='Arial Black'>A</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;600&family=Cairo:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#e8e7e3;--ink:#1b1b1b;--red:#d11a2a;--grey:#8e8e8a;--line:#c9c8c3;--card:#f3f2ef}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.5 Archivo,system-ui,sans-serif}
+h1,h2,h3,.brand{font-family:'Archivo Black',Impact,sans-serif;font-weight:400;margin:0;line-height:1}
+button,input{font:inherit}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.btn{background:var(--ink);color:var(--paper);border:0;padding:.8rem 1.2rem;cursor:pointer;font-weight:600;border-radius:2px}
+.btn.red{background:var(--red);color:#fff}.btn.ghost{background:none;color:var(--ink);border:2px solid var(--ink)}
+.btn:disabled{opacity:.5;cursor:wait}
+input{width:100%;padding:.75rem;border:2px solid var(--ink);background:#fff;border-radius:2px;margin:.25rem 0 1rem}
+label{font-weight:600;font-size:.9rem}
+.err{color:var(--red);font-weight:600;min-height:1.4em;margin:0 0 .5rem}
+header{display:flex;align-items:center;gap:1rem;padding:.8rem 1.2rem;border-bottom:3px solid var(--ink);position:sticky;top:0;background:var(--paper);z-index:5;flex-wrap:wrap}
+.brand{font-size:2rem;letter-spacing:.02em;margin-right:auto}
+nav{display:flex;gap:.4rem;flex-wrap:wrap}
+nav button{background:none;border:0;padding:.5rem .7rem;cursor:pointer;font-weight:600;border-bottom:3px solid transparent}
+nav button.on{border-color:var(--red)}
+main{max-width:1100px;margin:0 auto;padding:1.5rem 1.2rem 4rem}
+.hero{display:grid;grid-template-columns:1fr auto;align-items:center;gap:1rem;padding:2rem 0 2.5rem;border-bottom:1px solid var(--line);margin-bottom:2rem}
+.hero h1{font-size:clamp(4rem,16vw,10rem);letter-spacing:-.02em}
+.hero p{max-width:34ch;font-size:1.15rem;margin:1rem 0 1.4rem}
+.hero .ar{font:700 clamp(3rem,12vw,7rem)/1 Cairo;color:var(--red);transform:rotate(-6deg)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.2rem}
+.card{background:var(--card);border:1px solid var(--line);display:flex;flex-direction:column}
+.card .pic{padding:.8rem;background:#dddcd7}.card .pic svg,.card .pic img{width:100%;display:block}
+.card .pic img{aspect-ratio:4/3;object-fit:cover}
+.card .info{padding:1rem;display:flex;flex-direction:column;gap:.6rem;flex:1}
+.card h3{font-size:1.05rem;line-height:1.2}.price{font-weight:600}
+.card .btn{margin-top:auto}
+.studio{display:grid;grid-template-columns:1.2fr 1fr;gap:2rem;align-items:start}
+.stage{perspective:900px;background:#dddcd7;padding:1rem;touch-action:pan-y}
+.stage .cap{transition:transform .2s ease-out;transform-style:preserve-3d}
+.stage svg{width:100%;display:block;filter:drop-shadow(0 14px 10px rgba(0,0,0,.25))}
+.seg{display:flex;border:2px solid var(--ink);width:max-content;margin-bottom:1.2rem}
+.seg button{background:none;border:0;padding:.55rem 1.1rem;cursor:pointer;font-weight:600}
+.seg button.on{background:var(--ink);color:var(--paper)}
+.sw{display:flex;flex-wrap:wrap;gap:.6rem;margin:.4rem 0 1.2rem}
+.sw button{width:44px;height:44px;border-radius:50%;border:3px solid var(--paper);box-shadow:0 0 0 2px var(--line);cursor:pointer}
+.sw button.on{box-shadow:0 0 0 3px var(--red)}
+#cart{position:fixed;top:0;right:0;height:100%;width:min(420px,100%);background:var(--paper);border-left:3px solid var(--ink);padding:1.2rem;overflow:auto;transform:translateX(105%);transition:transform .25s;z-index:20}
+#cart.open{transform:none}
+.line{display:grid;grid-template-columns:72px 1fr auto;gap:.8rem;padding:.8rem 0;border-bottom:1px solid var(--line);align-items:center}
+.line svg{width:72px}.line small{display:block;color:#555}
+.qty button{width:28px;height:28px;border:2px solid var(--ink);background:none;cursor:pointer}
+table{width:100%;border-collapse:collapse;font-size:.9rem}th,td{text-align:left;padding:.5rem;border-bottom:1px solid var(--line);vertical-align:top}
+.tablewrap{overflow-x:auto;margin-bottom:2rem}
+.stats{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}.stats div{border:2px solid var(--ink);padding:1rem 1.4rem}.stats b{display:block;font:400 2rem 'Archivo Black'}
+#gate{min-height:100vh;display:grid;place-items:center;padding:1rem}
+#gate .box{width:min(420px,100%);background:var(--card);border:3px solid var(--ink);padding:1.6rem}
+#gate .brand{font-size:3.4rem;margin:0 0 .3rem}
+.link{background:none;border:0;color:var(--red);font-weight:600;cursor:pointer;padding:0}
+.toast{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:.8rem 1.2rem;z-index:30}
+@media(max-width:760px){.studio{grid-template-columns:1fr}.hero{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=n=>Number(n).toLocaleString('en-US')+' L.E';
+const CUSTOM_PRICE=650;
+const COLORS=[['Black','#161616'],['Grey','#8e8e8e'],['White','#f1f0ec'],['Red','#c1121f'],['Navy','#1f2f5a'],['Olive','#4d5a3a'],['Sand','#c8b48a'],['Brown','#5a3d2b']];
+let token=localStorage.getItem('asad_token'),me=null,products=[],tab='shop',pending=null;
+let cart=[];try{cart=JSON.parse(localStorage.getItem('asad_cart')||'[]')}catch{}
+let studio={color:'#161616',front:'ASAD',back:'',view:'front'};
+
+async function api(p,o={}){
+  const r=await fetch('/api'+p,{method:o.method||(o.body?'POST':'GET'),headers:{'Content-Type':'application/json',...(token?{Authorization:'Bearer '+token}:{})},body:o.body?JSON.stringify(o.body):undefined});
+  const d=await r.json().catch(()=>({}));
+  if(r.status===401&&token&&p!=='/login'){logout();}
+  if(!r.ok)throw new Error(d.error||'Something went wrong');return d;
+}
+const toast=m=>{const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.append(t);setTimeout(()=>t.remove(),2400)};
+const saveCart=()=>localStorage.setItem('asad_cart',JSON.stringify(cart));
+function logout(){token=null;me=null;localStorage.removeItem('asad_token');render()}
+
+// ---------- Cap drawing ----------
+function shade(hex,p){const n=parseInt(hex.slice(1),16);return '#'+[n>>16,n>>8&255,n&255].map(v=>Math.max(0,Math.min(255,Math.round(p<0?v*(1+p):v+(255-v)*p))).toString(16).padStart(2,'0')).join('')}
+function contrast(hex){const n=parseInt(hex.slice(1),16),l=.299*(n>>16)+.587*(n>>8&255)+.114*(n&255);return l>140?'#171717':'#f4f4f2'}
+function stitch(t,y,th,font,size){if(!t)return'';return `<text x="200" y="${y}" text-anchor="middle" font-family="${font}" font-size="${size}" fill="${th}" stroke="${shade(th,-.35)}" stroke-width=".7" letter-spacing="1">${esc(t)}</text>`}
+const fit=t=>Math.min(44,Math.floor(280/Math.max(t.length,1)*1.55));
+function capSVG(d,view='front'){
+  const c=d.color,dk=shade(c,-.28),dk2=shade(c,-.5),th=d.thread||contrast(c);
+  let h=`<svg viewBox="0 0 400 290" role="img" aria-label="ASAD cap, ${view} view"><ellipse cx="200" cy="272" rx="150" ry="11" fill="#000" opacity=".14"/>`;
+  if(view==='front'){
+    h+=`<path d="M40 198Q200 232 360 198Q350 252 200 262Q50 252 40 198Z" fill="${dk2}"/>`;
+    h+=`<path d="M58 196C58 76 140 30 200 30S342 76 342 196Q200 232 58 196Z" fill="${c}"/>`;
+    h+=`<path d="M200 30V214M200 30C160 70 140 130 142 208M200 30C240 70 260 130 258 208" stroke="${dk}" stroke-width="2" fill="none"/>`;
+    h+=`<path d="M58 196C58 76 140 30 200 30C150 70 90 130 58 196Z" fill="#fff" opacity=".1"/><circle cx="200" cy="31" r="8" fill="${dk}"/>`;
+    if(d.claw==='front')h+=`<g stroke="${th}" stroke-width="7" stroke-linecap="round" fill="none"><path d="M150 70L183 140"/><path d="M178 62L211 132"/><path d="M206 56L239 126"/></g>`;
+    if(d.claw==='side')h+=`<g stroke="${th}" stroke-width="5" stroke-linecap="round" fill="none"><path d="M280 110L300 168"/><path d="M296 102L316 160"/><path d="M312 96L332 154"/></g>`;
+    const y=d.claw==='front'?180:128;
+    h+=stitch(d.arabic,y+4,th,'Cairo',38)+stitch(d.front,y,th,"'Archivo Black'",fit(d.front||''));
+  }else{
+    h+=`<path d="M58 190C58 76 140 34 200 34S342 76 342 190Q200 208 58 190Z" fill="${c}"/>`;
+    h+=`<path d="M200 34V200M200 34C160 74 140 130 142 196M200 34C240 74 260 130 258 196" stroke="${dk}" stroke-width="2" fill="none"/>`;
+    h+=`<path d="M58 190C58 76 140 34 200 34C150 74 90 130 58 190Z" fill="#fff" opacity=".1"/>`;
+    h+=`<rect x="120" y="198" width="160" height="28" rx="6" fill="${dk2}"/><rect x="186" y="200" width="28" height="24" rx="3" fill="#b9b9b4"/><circle cx="200" cy="40" r="7" fill="${dk}"/>`;
+    h+=stitch(d.back,128,th,"'Archivo Black'",fit(d.back||''));
+  }
+  return h+'</svg>';
+}
+
+// ---------- Views ----------
+function render(){
+  if(!token||!me){token&&!me?boot():gate('login');return}
+  const nav=[['shop','Shop'],['studio','Make your own'],...(me.role==='admin'?[['admin','Dashboard']]:[])];
+  const count=cart.reduce((a,i)=>a+i.qty,0);
+  $('#app').innerHTML=`<header><div class="brand">ASAD</div><nav>${nav.map(([k,l])=>`<button class="${tab===k?'on':''}" data-tab="${k}">${l}</button>`).join('')}<button id="openCart">Cart (${count})</button><button id="out">Log out</button></nav></header>
+  <main id="view"></main><aside id="cart" aria-label="Cart"></aside>`;
+  document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;render()});
+  $('#openCart').onclick=()=>{drawCart();$('#cart').classList.add('open')};
+  $('#out').onclick=logout;
+  ({shop:shopView,studio:studioView,admin:adminView})[tab]();
+}
+
+function gate(mode,msg=''){
+  const f={
+    login:`<h2>Log in</h2><p class="err" id="e"></p><label>Username or email<input id="u" autocomplete="username"></label><label>Password<input id="p" type="password" autocomplete="current-password"></label><button class="btn red" id="go">Log in</button><p>New to ASAD? <button class="link" id="sw">Create an account</button></p>`,
+    signup:`<h2>Create account</h2><p class="err" id="e"></p><label>Username<input id="u" autocomplete="username"></label><label>Email<input id="m" type="email" autocomplete="email"></label><label>Password (8+ characters)<input id="p" type="password" autocomplete="new-password"></label><button class="btn red" id="go">Send verification code</button><p>Already a member? <button class="link" id="sw">Log in</button></p>`,
+    otp:`<h2>Check your email</h2><p>We sent a 6-digit code to <b>${esc(pending)}</b>.</p><p class="err" id="e"></p><label>Verification code<input id="c" inputmode="numeric" maxlength="6" autocomplete="one-time-code"></label><button class="btn red" id="go">Verify and enter</button><p><button class="link" id="sw">Use a different email</button></p>`
+  }[mode];
+  $('#app').innerHTML=`<div id="gate"><div class="box"><div class="brand">ASAD</div>${f}</div></div>`;
+  $('#e').textContent=msg;
+  $('#sw').onclick=()=>gate(mode==='login'?'signup':mode==='signup'?'login':'signup');
+  const go=$('#go');
+  const run=async fn=>{go.disabled=true;try{await fn()}catch(e){$('#e').textContent=e.message}go.disabled=false};
+  document.querySelectorAll('#gate input').forEach(i=>i.onkeydown=e=>e.key==='Enter'&&go.click());
+  go.onclick=()=>run(async()=>{
+    if(mode==='login'){finish(await api('/login',{body:{username:$('#u').value,password:$('#p').value}}))}
+    else if(mode==='signup'){const m=$('#m').value;await api('/signup',{body:{username:$('#u').value,email:m,password:$('#p').value}});pending=m.trim().toLowerCase();gate('otp')}
+    else finish(await api('/verify',{body:{email:pending,code:$('#c').value}}));
+  });
+}
+function finish(d){token=d.token;localStorage.setItem('asad_token',token);me=d.user;tab='shop';boot()}
+async function boot(){
+  try{me=await api('/me');products=await api('/products');render()}catch{if(!token)gate('login')}
+}
+
+function shopView(){
+  $('#view').innerHTML=`<section class="hero"><div><h1>ASAD</h1><p>Streetwear caps, stitched with claws and attitude. Or design your own.</p><button class="btn red" id="mk">Make your own</button></div><div class="ar" aria-hidden="true">أسد</div></section>
+  <div class="grid">${products.map(p=>`<article class="card"><div class="pic">${p.image_url?`<img src="${esc(p.image_url)}" alt="${esc(p.name)}">`:capSVG(p.design)}</div><div class="info"><h3>${esc(p.name)}</h3><div class="price">${fmt(p.price)}</div><button class="btn" data-add="${p.id}">Add to cart</button></div></article>`).join('')}</div>`;
+  $('#mk').onclick=()=>{tab='studio';render()};
+  document.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>addToCart({type:'product',id:+b.dataset.add,qty:1}));
+}
+
+function addToCart(it){
+  const k=i=>i.type==='product'?'p'+i.id:['c',i.color,i.front,i.back].join('|');
+  const ex=cart.find(i=>k(i)===k(it));ex?ex.qty++:cart.push(it);
+  saveCart();toast('Added to cart');render();
+}
+
+function studioView(){
+  $('#view').innerHTML=`<h2 style="margin-bottom:1.2rem">Make your own</h2><div class="studio"><div class="stage" id="stage"><div class="cap" id="cap"></div></div><div>
+  <div class="seg" role="group" aria-label="View"><button data-v="front">Front</button><button data-v="back">Back</button></div>
+  <label>Cap color</label><div class="sw">${COLORS.map(([n,h])=>`<button data-c="${h}" style="background:${h}" aria-label="${n}" title="${n}"></button>`).join('')}</div>
+  <label>Front embroidery<input id="ft" maxlength="18" value="${esc(studio.front)}" placeholder="Text on the front"></label>
+  <label>Back embroidery<input id="bt" maxlength="18" value="${esc(studio.back)}" placeholder="Text on the back"></label>
+  <p class="price" style="font-size:1.3rem">${fmt(CUSTOM_PRICE)}</p><button class="btn red" id="addc">Add to cart</button></div></div>`;
+  const paint=()=>{$('#cap').innerHTML=capSVG({color:studio.color,front:studio.front,back:studio.back},studio.view);
+    document.querySelectorAll('[data-v]').forEach(b=>b.classList.toggle('on',b.dataset.v===studio.view));
+    document.querySelectorAll('[data-c]').forEach(b=>b.classList.toggle('on',b.dataset.c===studio.color))};
+  paint();
+  document.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{if(studio.view===b.dataset.v)return;const c=$('#cap');c.style.transform='rotateY(90deg)';setTimeout(()=>{studio.view=b.dataset.v;paint();c.style.transform=''},200)});
+  document.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{studio.color=b.dataset.c;paint()});
+  $('#ft').oninput=e=>{studio.front=e.target.value;paint()};
+  $('#bt').oninput=e=>{studio.back=e.target.value;paint()};
+  const st=$('#stage');
+  st.onpointermove=e=>{const r=st.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;$('#cap').style.transform=`rotateY(${x*24}deg) rotateX(${-y*14}deg)`};
+  st.onpointerleave=()=>$('#cap').style.transform='';
+  $('#addc').onclick=()=>addToCart({type:'custom',color:studio.color,front:studio.front.trim(),back:studio.back.trim(),qty:1});
+}
+
+function lineOf(i){
+  if(i.type==='product'){const p=products.find(x=>x.id===i.id);return p?{name:p.name,unit:p.price,pic:p.image_url?`<img src="${esc(p.image_url)}" alt="" style="width:72px">`:capSVG(p.design),sub:''}:null}
+  const cn=(COLORS.find(c=>c[1]===i.color)||[i.color])[0];
+  return{name:'ASAD custom cap',unit:CUSTOM_PRICE,pic:capSVG({color:i.color,front:i.front,back:i.back}),sub:`${cn} · Front: ${i.front||'none'} · Back: ${i.back||'none'}`};
+}
+function drawCart(){
+  cart=cart.filter(i=>lineOf(i));
+  const rows=cart.map((i,n)=>{const l=lineOf(i);return `<div class="line">${l.pic}<div><b>${esc(l.name)}</b><small>${esc(l.sub)}</small><div class="qty"><button data-q="${n}" data-d="-1" aria-label="Less">−</button> ${i.qty} <button data-q="${n}" data-d="1" aria-label="More">+</button></div></div><b>${fmt(l.unit*i.qty)}</b></div>`}).join('');
+  const total=cart.reduce((a,i)=>a+lineOf(i).unit*i.qty,0);
+  $('#cart').innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center"><h2>Your cart</h2><button class="btn ghost" id="x">Close</button></div>${rows||'<p>Your cart is empty. Pick a cap from the shop.</p>'}
+  ${cart.length?`<h3 style="margin:1.2rem 0">Total: ${fmt(total)}</h3><p class="err" id="ce"></p><label>Phone<input id="ph" type="tel" autocomplete="tel"></label><label>Delivery address<input id="ad" autocomplete="street-address"></label><button class="btn red" id="buy">Place order (pay on delivery)</button>`:''}`;
+  $('#x').onclick=()=>$('#cart').classList.remove('open');
+  document.querySelectorAll('[data-q]').forEach(b=>b.onclick=()=>{const i=cart[+b.dataset.q];i.qty+=+b.dataset.d;if(i.qty<1)cart.splice(+b.dataset.q,1);saveCart();drawCart();render();$('#cart').classList.add('open')});
+  const buy=$('#buy');if(buy)buy.onclick=async()=>{buy.disabled=true;try{
+    const o=await api('/orders',{body:{items:cart,phone:$('#ph').value,address:$('#ad').value}});
+    cart=[];saveCart();toast(`Order #${o.id} placed: ${fmt(o.total)}`);render();
+  }catch(e){$('#ce').textContent=e.message;buy.disabled=false}};
+}
+
+async function adminView(){
+  $('#view').innerHTML='<p>Loading…</p>';
+  let d;try{d=await api('/admin/summary')}catch(e){$('#view').innerHTML=`<p class="err">${esc(e.message)}</p>`;return}
+  const dt=s=>new Date(s).toLocaleString();
+  $('#view').innerHTML=`<h2 style="margin-bottom:1.2rem">Dashboard</h2>
+  <div class="stats"><div><b>${fmt(d.sales)}</b>Total sales</div><div><b>${d.orders.length}</b>Orders</div><div><b>${d.users.length}</b>Users</div></div>
+  <h3 style="margin-bottom:.8rem">Add a new cap</h3>
+  <form id="np" style="max-width:480px;margin-bottom:2.5rem"><p class="err" id="pe"></p>
+  <label>Name<input id="pn" required maxlength="80"></label><label>Price (L.E)<input id="pp" type="number" min="1" required></label>
+  <label>Cap color<input id="pc" type="color" value="#161616" style="height:48px;padding:4px"></label>
+  <label>Front text (optional)<input id="pf" maxlength="18"></label><label>Photo link (optional, https://)<input id="pi" type="url"></label>
+  <button class="btn red">Add to shop</button></form>
+  <h3 style="margin-bottom:.8rem">Orders</h3><div class="tablewrap"><table><tr><th>#</th><th>Customer</th><th>Items</th><th>Total</th><th>Contact</th><th>Date</th></tr>${d.orders.map(o=>`<tr><td>${o.id}</td><td>${esc(o.username)}</td><td>${o.items.map(i=>`${i.qty}× ${esc(i.name)}${i.color?` (${esc(i.color)}, front: ${esc(i.front||'none')}, back: ${esc(i.back||'none')})`:''}`).join('<br>')}</td><td>${fmt(o.total)}</td><td>${esc(o.phone)}<br>${esc(o.address)}</td><td>${dt(o.created_at)}</td></tr>`).join('')||'<tr><td colspan="6">No orders yet.</td></tr>'}</table></div>
+  <h3 style="margin-bottom:.8rem">Users</h3><div class="tablewrap"><table><tr><th>Username</th><th>Email</th><th>Role</th><th>Joined</th></tr>${d.users.map(u=>`<tr><td>${esc(u.username)}</td><td>${esc(u.email)}</td><td>${esc(u.role)}</td><td>${dt(u.created_at)}</td></tr>`).join('')}</table></div>`;
+  $('#np').onsubmit=async e=>{e.preventDefault();try{
+    const color=$('#pc').value;
+    await api('/products',{body:{name:$('#pn').value,price:$('#pp').value,image_url:$('#pi').value||null,design:{color,front:$('#pf').value}}});
+    products=await api('/products');toast('Cap added to the shop');tab='shop';render();
+  }catch(er){$('#pe').textContent=er.message}};
+}
+boot();
+if(!token)gate('login');
+</script>
+</body>
+</html>
